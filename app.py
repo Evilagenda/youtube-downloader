@@ -16,12 +16,13 @@ def download_video():
         return jsonify({'error': 'Please provide a valid YouTube URL'}), 400
 
     ydl_opts = {
+        'format': 'best',
         'quiet': True,
         'no_warnings': True,
         'cookiefile': 'cookies.txt',
         'extractor_args': {
             'youtube': {
-                'player_client': ['mweb', 'ios']
+                'player_client': ['android', 'web']
             }
         }
     }
@@ -31,10 +32,7 @@ def download_video():
             info = ydl.extract_info(video_url, download=False)
             download_url = info.get('url')
 
-            if not download_url and 'requested_formats' in info:
-                download_url = info['requested_formats'][0].get('url')
-
-            if not download_url and 'formats' in info:
+            if not download_url and 'formats' in info and len(info['formats']) > 0:
                 download_url = info['formats'][-1].get('url')
 
             return jsonify({
