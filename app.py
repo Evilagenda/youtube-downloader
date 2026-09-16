@@ -28,12 +28,13 @@ def fetch_video():
     'quiet': True,
     'no_warnings': True,
     'format_sort': ['res', 'ext:mp4:m4a'],
+    'cookiefile': 'cookies.txt',
     'extractor_args': {
         'youtube': {
             'player_client': ['mweb', 'ios']
         }
     }
-}   
+}
  try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(video_url, download=False)
