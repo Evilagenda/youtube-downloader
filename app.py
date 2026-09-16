@@ -3,6 +3,10 @@ import yt_dlp
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+    return "YouTube Downloader API is Live!"
+
 @app.route('/download', methods=['POST'])
 def download_video():
     data = request.get_json()
@@ -12,16 +16,12 @@ def download_video():
     if not video_url:
         return jsonify({'error': 'Please provide a valid YouTube URL'}), 400
 
-    if format_type == 'audio':
-        format_selector = 'bestaudio/best'
-    else:
-        format_selector = 'best[ext=mp4]/best/bestvideo+bestaudio'
+    format_selector = 'bestaudio/best' if format_type == 'audio' else 'best/bestvideo+bestaudio'
 
     ydl_opts = {
         'format': format_selector,
         'quiet': True,
         'no_warnings': True,
-        'format_sort': ['res', 'ext:mp4:m4a'],
         'cookiefile': 'cookies.txt',
         'extractor_args': {
             'youtube': {
