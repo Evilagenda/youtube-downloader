@@ -33,8 +33,8 @@ def fetch_video():
             'player_client': ['mweb', 'ios']
         }
     }
-}
-    try:
+}   
+ try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(video_url, download=False)
             
