@@ -16,7 +16,7 @@ def download_video():
     if not video_url:
         return jsonify({'error': 'Please provide a valid YouTube URL'}), 400
 
-    format_selector = 'bestaudio/best' if format_type == 'audio' else 'best/bestvideo+bestaudio'
+    format_selector = 'ba/b' if format_type == 'audio' else 'b/bv*+ba/best'
 
     ydl_opts = {
         'format': format_selector,
@@ -25,7 +25,7 @@ def download_video():
         'cookiefile': 'cookies.txt',
         'extractor_args': {
             'youtube': {
-                'player_client': ['mweb', 'ios']
+                'player_client': ['mweb', 'ios', 'android']
             }
         }
     }
