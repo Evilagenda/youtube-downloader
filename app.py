@@ -30,7 +30,7 @@ def fetch_video():
     'format_sort': ['res', 'ext:mp4:m4a'],
     'extractor_args': {
         'youtube': {
-            'player_client': ['android', 'ios']
+            'player_client': ['mweb', 'ios']
         }
     }
 }
