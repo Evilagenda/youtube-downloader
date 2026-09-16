@@ -11,21 +11,17 @@ def home():
 def download_video():
     data = request.get_json()
     video_url = data.get('url') if data else None
-    format_type = data.get('format_type', 'video') if data else 'video'
 
     if not video_url:
         return jsonify({'error': 'Please provide a valid YouTube URL'}), 400
 
-    format_selector = 'ba/b' if format_type == 'audio' else 'b/bv*+ba/best'
-
     ydl_opts = {
-        'format': format_selector,
         'quiet': True,
         'no_warnings': True,
         'cookiefile': 'cookies.txt',
         'extractor_args': {
             'youtube': {
-                'player_client': ['mweb', 'ios', 'android']
+                'player_client': ['mweb', 'ios']
             }
         }
     }
