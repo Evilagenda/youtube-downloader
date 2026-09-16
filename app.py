@@ -24,12 +24,16 @@ def fetch_video():
         format_selector = 'best[ext=mp4]/best/bestvideo+bestaudio'
 
     ydl_opts = {
-        'format': format_selector,
-        'quiet': True,
-        'no_warnings': True,
-        'format_sort': ['res', 'ext:mp4:m4a'],
+    'format': format_selector,
+    'quiet': True,
+    'no_warnings': True,
+    'format_sort': ['res', 'ext:mp4:m4a'],
+    'extractor_args': {
+        'youtube': {
+            'player_client': ['android', 'ios']
+        }
     }
-
+}
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info = ydl.extract_info(video_url, download=False)
