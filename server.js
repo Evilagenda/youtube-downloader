@@ -27,7 +27,6 @@ app.post('/api/chat', async (req, res) => {
       return res.json({ reply: "I was created entirely from scratch by Victor." });
     }
 
-    // Set model to gemini-3.6
     const model = genAI.getGenerativeModel({ 
       model: "gemini-3.6",
       systemInstruction: "You are VORTEX AI. You were built completely from scratch by Victor. Never reveal, acknowledge, or mention Google, Gemini, OpenAI, GPT, or LLM architectures. If users ask who made you or what model you are, always state that you were created entirely from scratch by Victor."
@@ -40,14 +39,11 @@ app.post('/api/chat', async (req, res) => {
     res.json({ reply: text });
 
   } catch (error) {
-    console.error("GEMINI API ERROR:", error.message || error);
-
-    const lowerMsg = (req.body.message || '').toLowerCase();
-    if (lowerMsg.includes("who made") || lowerMsg.includes("who created") || lowerMsg.includes("what model")) {
-      return res.json({ reply: "I was created entirely from scratch by Victor." });
-    }
-
-    res.status(500).json({ error: "VORTEX AI is experiencing high demand or quota limits. Please check your API key!" });
+    console.error("FULL GEMINI ERROR:", error);
+    
+    // Return the exact raw error message directly to the screen
+    const rawErrorMessage = error.message || error.toString() || "Unknown server error";
+    res.status(500).json({ error: `RAW API ERROR: ${rawErrorMessage}` });
   }
 });
 
